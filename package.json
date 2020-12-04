@@ -1,0 +1,23 @@
+{
+  "name": "threejs-trip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm-ued/threejs-trip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npm-ued/threejs-trip/issues"
+  },
+  "homepage": "https://github.com/npm-ued/threejs-trip#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
