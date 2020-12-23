@@ -1,5 +1,10 @@
 // 获取canvas画布
-var canvas = document.getElementById('webgl');
+const canvas: HTMLCanvasElement = document.getElementById('webgl');
+if(canvas) {
+
+} else {
+  throw new Error('can not find container by specified selector');
+}
 // 通过方法getContext获取Webgl上下文
 var gl = canvas.getContext('webgl');
 console.log('heihei');
