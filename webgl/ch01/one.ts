@@ -2,7 +2,7 @@
 var canvas = document.getElementById('webgl');
 // 通过方法getContext获取Webgl上下文
 var gl = canvas.getContext('webgl');
-
+console.log('heihei');
 // 顶点着色器源码
 // 给内置变量gl_PointSize赋值像素大小
 var vertextShaderSource = `

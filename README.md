@@ -6,3 +6,4 @@
 * three.js
 * http-server
 * typescript
+* 自动打开浏览器，并且刷新
