@@ -1,12 +1,12 @@
 // 获取canvas画布
-const canvas: HTMLCanvasElement = document.getElementById('webgl');
+let gl: WebGLRenderingContext;
+const canvas = document.getElementById('webgl') as HTMLCanvasElement;
 if(canvas) {
   // 通过方法getContext获取Webgl上下文
-var gl = canvas.getContext('webgl');
+  gl = canvas.getContext('webgl') as WebGLRenderingContext;
 } else {
   throw new Error('can not find container by specified selector');
 }
-console.log('heihei');
 // 顶点着色器源码
 // 给内置变量gl_PointSize赋值像素大小
 var vertextShaderSource = `
@@ -24,17 +24,25 @@ void main(){
 }
 `;
 
+if(!gl) {
+  throw new Error('Canvas WebGLRenderingContext not found, please check it is running in Browser environment');
+}
 // 初始化着色器
 var program = initShader(gl, vertextShaderSource, fragShaderSource);
 // 开始绘制
 gl.drawArrays(gl.POINTS, 0, 1);
-
 //声明初始化着色器函数
-function initShader(gl, vertexShaderSource, fragmentShaderSource) {
+function initShader(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
   //创建顶点着色器对象
-  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  if(!vertexShader) {
+    throw new Error('createShader error');
+  }
   //创建片元着色器对象
-  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  if(!fragmentShader) {
+    throw new Error('createShader error');
+  }
   //引入顶点、片元着色器源代码
   gl.shaderSource(vertexShader, vertexShaderSource);
   gl.shaderSource(fragmentShader, fragmentShaderSource);
@@ -43,7 +51,10 @@ function initShader(gl, vertexShaderSource, fragmentShaderSource) {
   gl.compileShader(fragmentShader);
 
   //创建程序对象program
-  var program = gl.createProgram();
+  const program = gl.createProgram();
+  if(!program) {
+    throw new Error('createProgram error');
+  }
   //附着顶点着色器和片元着色器到program
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
