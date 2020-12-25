@@ -1,7 +1,7 @@
 // 获取canvas画布
 let gl: WebGLRenderingContext;
 const canvas = document.getElementById('webgl') as HTMLCanvasElement;
-if(canvas) {
+if (canvas) {
   // 通过方法getContext获取Webgl上下文
   gl = canvas.getContext('webgl') as WebGLRenderingContext;
 } else {
@@ -9,38 +9,42 @@ if(canvas) {
 }
 // 顶点着色器源码
 // 给内置变量gl_PointSize赋值像素大小
+// 顶点位置，位于坐标原点
+// vec4代表的是一种数据类型，前三个参数表示顶点坐标值xyz
 var vertextShaderSource = `
 void main(){
-  gl_PointSize=20.0;
-  gl_Position=vec4(0.0,0.0,0.0,1.0);
-}
-`;
+  gl_PointSize=10.0; 
+  gl_Position=vec4(0.5,1.0,0.0,1.0);
+}`;
 
 // 片元着色器源码
 // gl_FragColor 定义片元颜色
+// vec4，前三个参数是RGB，最后一个参数是透明度A
 var fragShaderSource = `
 void main(){
-  gl_FragColor= vec4(1.0,0.0,0.0,1.0);
+  gl_FragColor= vec4(0.0,1.0,0.0,1.0);
 }
 `;
 
-if(!gl) {
+if (!gl) {
   throw new Error('Canvas WebGLRenderingContext not found, please check it is running in Browser environment');
 }
 // 初始化着色器
 var program = initShader(gl, vertextShaderSource, fragShaderSource);
 // 开始绘制
 gl.drawArrays(gl.POINTS, 0, 1);
+
+
 //声明初始化着色器函数
 function initShader(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
   //创建顶点着色器对象
   const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-  if(!vertexShader) {
+  if (!vertexShader) {
     throw new Error('createShader error');
   }
   //创建片元着色器对象
   const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-  if(!fragmentShader) {
+  if (!fragmentShader) {
     throw new Error('createShader error');
   }
   //引入顶点、片元着色器源代码
@@ -49,10 +53,10 @@ function initShader(gl: WebGLRenderingContext, vertexShaderSource: string, fragm
   //编译顶点、片元着色器
   gl.compileShader(vertexShader);
   gl.compileShader(fragmentShader);
-
+  var data = new Float32Array([0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5]);
   //创建程序对象program
   const program = gl.createProgram();
-  if(!program) {
+  if (!program) {
     throw new Error('createProgram error');
   }
   //附着顶点着色器和片元着色器到program
