@@ -27,9 +27,6 @@ function init() {
   plane.position.set(15, 0, 0);
   // 设置接收阴影
   plane.receiveShadow = true;
-  // plane.position.x = 15;
-  // plane.position.y = 0;
-  // plane.position.z = 0;
 
   // add the plane to the scene
   scene.add(plane);
@@ -76,16 +73,18 @@ function init() {
   scene.add(spotLight);
 
   // position and point the camera to the center of the scene
-  // camera.position.x = -30;
-  // camera.position.y = 40;
-  // camera.position.z = 30;
   camera.position.set(-30, 40, 30);
   camera.lookAt(scene.position);
 
   // 将renderer的内容渲染到页面
   document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
-
-  renderer.render(scene, camera);
-
+  let count = 1;
+  function renderScence () {
+    requestAnimationFrame(renderScence);
+    console.log(`执行了${count}次`, +new Date());
+    count++;
+    renderer.render(scene, camera);
+  }
+  renderScence();
 }
 window.onload = init;
