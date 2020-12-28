@@ -1,3 +1,4 @@
+declare var Stats:any
 function init() {
   const { innerWidth, innerHeight } = window;
   // 创建一个场景
@@ -79,12 +80,24 @@ function init() {
   // 将renderer的内容渲染到页面
   document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
   let count = 1;
+  const stats = initStats();
   function renderScence () {
+    stats.update();
     requestAnimationFrame(renderScence);
     console.log(`执行了${count}次`, +new Date());
     count++;
     renderer.render(scene, camera);
   }
   renderScence();
+}
+function initStats() {
+  var stats = new Stats();
+  stats.setMode(0); // 0: fps, 1: ms
+  // Align top-left
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+  document.getElementById("Stats-output")?.appendChild(stats.domElement);
+  return stats;
 }
 window.onload = init;
