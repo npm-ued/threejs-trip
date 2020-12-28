@@ -1,4 +1,7 @@
-declare var Stats:any
+declare var Stats:any;
+declare var dat:any;
+declare var rotationSpeed: number;
+declare var bouncingSpeed: number;
 function init() {
   const { innerWidth, innerHeight } = window;
   // 创建一个场景
@@ -79,17 +82,33 @@ function init() {
 
   // 将renderer的内容渲染到页面
   document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
-  let count = 1;
   const stats = initStats();
+  let step = 0;
+  const controls = new function() {
+    this.rotationSpeed = 0.02;
+    this.bouncingSpeed = 0.03;
+  }
+  const gui = new dat.GUI();
+  gui.add(controls, 'rotationSpeed', 0, 0.5).onChange(function (e: number) {
+    controls.rotationSpeed = e;
+  });
+  gui.add(controls, 'bouncingSpeed', 0, 0.5).onChange(function (e: number) {
+    controls.bouncingSpeed = e;
+  });
   function renderScence () {
     stats.update();
+    cube.rotation.x += controls.rotationSpeed;
+    cube.rotation.y += controls.rotationSpeed;
+    cube.rotation.z += controls.rotationSpeed;
+    step += controls.bouncingSpeed;
+    sphere.position.x = 20 + 10*(Math.cos(step));
+    sphere.position.y = 2 + 10*Math.abs(Math.sin(step));
     requestAnimationFrame(renderScence);
-    console.log(`执行了${count}次`, +new Date());
-    count++;
     renderer.render(scene, camera);
   }
   renderScence();
 }
+
 function initStats() {
   var stats = new Stats();
   stats.setMode(0); // 0: fps, 1: ms
@@ -100,4 +119,5 @@ function initStats() {
   document.getElementById("Stats-output")?.appendChild(stats.domElement);
   return stats;
 }
+
 window.onload = init;
