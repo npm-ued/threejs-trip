@@ -2,14 +2,16 @@ declare var Stats:any;
 declare var dat:any;
 declare var rotationSpeed: number;
 declare var bouncingSpeed: number;
+declare var initTrackballControls:any;
+let camera:any, scene:any, renderer:any;
 function init() {
   const { innerWidth, innerHeight } = window;
   // 创建一个场景
-  const scene = new THREE.Scene();
+  scene = new THREE.Scene();
   // 创建相机
-  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
   // 创建一个渲染
-  const renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer();
   // renderer.setClearColor();
   renderer.setClearColor(new THREE.Color(0xEEEEEE));
   renderer.setSize(innerWidth, innerHeight);
@@ -82,11 +84,14 @@ function init() {
 
   // 将renderer的内容渲染到页面
   document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
+  // add the two lines below
+  // const trackballCOntrols =  initTrackballControls(camera, renderer);
+  // const clock = new THREE.clock();
   const stats = initStats();
   let step = 0;
-  const controls = new function() {
-    this.rotationSpeed = 0.02;
-    this.bouncingSpeed = 0.03;
+  const controls = {
+    rotationSpeed: 0.02,
+    bouncingSpeed: 0.03
   }
   const gui = new dat.GUI();
   gui.add(controls, 'rotationSpeed', 0, 0.5).onChange(function (e: number) {
@@ -107,10 +112,19 @@ function init() {
     renderer.render(scene, camera);
   }
   renderScence();
+
+  
+}
+
+function onResize() {
+  const { innerWidth, innerHeight } = window;
+  camera.aspect = innerWidth/ innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
 }
 
 function initStats() {
-  var stats = new Stats();
+  const stats = new Stats();
   stats.setMode(0); // 0: fps, 1: ms
   // Align top-left
   stats.domElement.style.position = 'absolute';
@@ -119,5 +133,7 @@ function initStats() {
   document.getElementById("Stats-output")?.appendChild(stats.domElement);
   return stats;
 }
+
+window.addEventListener('resize', onResize, false);
 
 window.onload = init;
