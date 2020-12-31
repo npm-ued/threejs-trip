@@ -20,9 +20,12 @@ declare var initTrackballControls:any;
 
 
     // create the ground plane
-    var planeGeometry = new THREE.PlaneGeometry(60, 40, 1, 1);
-    var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
-    var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    const planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
+    const planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    // rotate and position the plane
+    plane.rotation.x = -0.5 * Math.PI;
+    plane.position.set(8, 0, 0);
     // 接受投影
     plane.receiveShadow = true;
 
