@@ -20,31 +20,32 @@ declare var initTrackballControls:any;
 
 
     // create the ground plane
-    const planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
+    const planeGeometry = new THREE.PlaneGeometry(60, 40, 1, 1);
     const planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     // rotate and position the plane
     plane.rotation.x = -0.5 * Math.PI;
-    plane.position.set(8, 0, 0);
+    plane.position.set(0, 0, 0);
     // 接受投影
     plane.receiveShadow = true;
 
     // add the plane to the scene
     scene.add(plane);
 
-    // 添加光源
-    const spotLight = new THREE.SpotLight('#ffffff');
-    spotLight.position.set(-40, 40, -15);
-    // 设置可以产生阴影
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
-    spotLight.shadow.camera.far = 130;
-    spotLight.shadow.camera.near = 40;
-    scene.add(spotLight);
-
     // position and point the camera to the center of the scene
     camera.position.set(-30, 40, 30);
     camera.lookAt(scene.position);
+
+    // add subtle ambient lighting
+    // const ambientLight = new THREE.AmbientLight(0x0c0c0c);
+    // scene.add(ambientLight);
+    // 添加光源
+    const spotLight = new THREE.SpotLight('#ffffff');
+    spotLight.position.set(-40, 60, -10);
+    // 设置可以产生阴影
+    spotLight.castShadow = true;
+    scene.add(spotLight);
+
     // 将renderer的内容渲染到页面
     document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
 

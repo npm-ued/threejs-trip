@@ -1,3 +1,5 @@
 node_modules/
 webgl/**/*.js
+webgl/**/*.js.map
 three/**/*.js
+three/**/*.js.map
