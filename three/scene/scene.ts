@@ -9,7 +9,12 @@ declare var initTrackballControls:any;
     const { innerWidth, innerHeight } = window;
     // 创建一个场景
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xffffff, 0.015, 100);
+    // 0.015 是近处的属性值，100是远处的属性值，使用THREE.fog创建的对象，雾的浓度是线性增长的
+    // scene.fog = new THREE.Fog(0xffffff, 0.015, 100);
+    // 这个方法只用设置雾的颜色和浓度即可，改雾中的浓度不再是线性增长的，是随着距离呈指数增长
+    scene.fog = new THREE.FogExp2(0xffffff, 0.01);
+    // 强制使用某种材质
+    scene.overrideMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
     // 创建相机
     camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
     // 创建一个渲染

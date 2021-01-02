@@ -8,5 +8,7 @@
   * index.html 新版本库（效果虚）
   * scene.ts 动态添加cube图形
   * scene2.ts 动态添加cube图形
-
+* geometries 几何体
+  * geometries.html
+  * geometries.ts
 * libs 需要导入的js类库
