@@ -9,6 +9,7 @@ declare var initTrackballControls:any;
     const { innerWidth, innerHeight } = window;
     // 创建一个场景
     scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xffffff, 0.015, 100);
     // 创建相机
     camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
     // 创建一个渲染

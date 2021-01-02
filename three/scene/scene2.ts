@@ -1,8 +1,7 @@
+(function() {
 // once everything is loaded, we run our Three.js stuff.
 function init() {
-
   var stats = initStats();
-
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   var scene = new THREE.Scene();
 
@@ -49,26 +48,23 @@ function init() {
   scene.add(spotLight);
 
   // add the output of the renderer to the html element
-  document.getElementById("WebGL-output").appendChild(renderer.domElement);
+  document.getElementById("WebGL-output")?.appendChild(renderer.domElement);
 
   // call the render function
   var step = 0;
 
-  var controls = new function () {
-      this.rotationSpeed = 0.02;
-      this.numberOfObjects = scene.children.length;
-
-      this.removeCube = function () {
+  var controls = {
+      rotationSpeed: 0.02,
+      numberOfObjects: scene.children.length,
+      removeCube: function () {
           var allChildren = scene.children;
           var lastObject = allChildren[allChildren.length - 1];
           if (lastObject instanceof THREE.Mesh) {
               scene.remove(lastObject);
               this.numberOfObjects = scene.children.length;
           }
-      };
-
-      this.addCube = function () {
-
+      },
+      addCube: function () {
           var cubeSize = Math.ceil((Math.random() * 3));
           var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
           var cubeMaterial = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff});
@@ -86,9 +82,8 @@ function init() {
           // add the cube to the scene
           scene.add(cube);
           this.numberOfObjects = scene.children.length;
-      };
-
-      this.outputObjects = function () {
+      },
+      outputObjects: function () {
           console.log(scene.children);
       }
   };
@@ -130,10 +125,10 @@ function init() {
       stats.domElement.style.position = 'absolute';
       stats.domElement.style.left = '0px';
       stats.domElement.style.top = '0px';
-
-      document.getElementById("Stats-output").appendChild(stats.domElement);
+      document.getElementById("Stats-output")?.appendChild(stats.domElement);
 
       return stats;
   }
 }
 window.onload = init
+})();

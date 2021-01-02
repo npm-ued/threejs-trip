@@ -4,6 +4,7 @@ declare var rotationSpeed: number;
 declare var bouncingSpeed: number;
 declare var initTrackballControls:any;
 let camera:any, scene:any, renderer:any;
+(function() {
 function init() {
   const { innerWidth, innerHeight } = window;
   // 创建一个场景
@@ -137,3 +138,4 @@ function initStats() {
 window.addEventListener('resize', onResize, false);
 
 window.onload = init;
+})();
