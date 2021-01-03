@@ -80,6 +80,27 @@
       geoms.push(new THREE.TorusGeometry(3, 1, 10, 10));
 
       geoms.push(new THREE.TorusKnotGeometry(3, 0.5, 50, 20));
+      let j = 0;
+      for (var i = 0; i < geoms.length; i++) {
+        const cubeMaterial = new THREE.MeshLambertMaterial({wireframe: true, color: Math.random() * 0xffffff});
+        const materials = [
+            new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}),
+            new THREE.MeshBasicMaterial({color: 0x000000, wireframe: true})
+        ];
+        // const mesh = THREE.SceneUtils.createMultiMaterialObject(geoms[i] as THREE.Geometry, materials);
+        // mesh.traverse(function (e) {
+        //     e.castShadow = true
+        // });
+
+        const mesh = new THREE.Mesh(geoms[i], materials[i]);
+        mesh.castShadow=true;
+        mesh.position.x = -24 + ((i % 4) * 12);
+        mesh.position.y = 4;
+        mesh.position.z = -8 + (j * 12);
+
+        if ((i + 1) % 4 == 0) {j++;}
+        scene.add(mesh);
+      }
     }
 
 
