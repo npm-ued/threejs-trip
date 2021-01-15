@@ -6,12 +6,7 @@
     const stats = initStats();
     scene = new THREE.Scene();
     // 透视摄像机
-    camera = new THREE.PerspectiveCamera(
-      45,
-      innerWidth / innerHeight,
-      0.1,
-      1000
-    );
+    camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
     camera.position.set(120, 60, 180);
 
     renderer = new THREE.WebGLRenderer();
@@ -42,6 +37,9 @@
           scene.add(cube);
       }
     }
+    const lookAtGeom = new THREE.SphereGeometry(2);
+    const lookAtMesh = new THREE.Mesh(lookAtGeom, new THREE.MeshLambertMaterial({color: 0xff0000}));
+    scene.add(lookAtMesh);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
     directionalLight.position.set(-20, 40, 60);
@@ -55,6 +53,7 @@
     const controls = {
       perspective: 'Perspective',
       switchCamera() {
+        // 如果是透视相机转化为正交相机
         if (camera instanceof THREE.PerspectiveCamera) {
           camera = new THREE.OrthographicCamera(innerWidth / -16, innerWidth / 16, innerHeight / 16, innerHeight / -16, -200, 500);
           camera.position.x = 120;
@@ -77,9 +76,15 @@
     gui.add(controls, 'perspective').listen();
     camera.lookAt(scene.position);
     render();
-
+    let step = 0;
     function render() {
       stats.update();
+      step +=0.2;
+      // if (camera instanceof THREE.Camera) {
+        var x = 10 + ( 100 * (Math.sin(step)));
+        // camera.lookAt(new THREE.Vector3(x, 10, 0));
+        lookAtMesh.position.copy(new THREE.Vector3(x, 10, 0));
+      // }
       // render using requestAnimationFrame
       requestAnimationFrame(render);
       renderer.render(scene, camera);
