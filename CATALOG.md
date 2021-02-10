@@ -11,4 +11,10 @@
 * geometries 几何体
   * geometries.html
   * geometries.ts
+* light 光源
+  * light.html
+  * light.ts
+* meterial 材质
+  * meterial.html 
+  * meterial.ts
 * libs 需要导入的js类库
